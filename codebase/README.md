@@ -1,6 +1,5 @@
-# CSC 493: 
-
 	README.md
+
 - Project name: Gravity
 - **Project Concept (concept.md)**
 [Scope]: The boundaries should be completing one working algorithm which is the gravity simulation. The algorithm will include 2 examples to demonstrate it. The mentioned goals should be completed about 3 weeks before demonstration day, to leave time for any interesting additions, if any. 

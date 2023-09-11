@@ -1,6 +1,5 @@
-## Concept Proposal
-
 	concept.md
+
   - Project Name: Gravity
   - Goals: create a useful tool to demonstrate the effects of gravity, including the relation between objects on Earth, and relation 
 	       between Earth and other planets
