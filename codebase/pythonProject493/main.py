@@ -22,10 +22,10 @@ Mercury = (173, 168, 165)
 
 
 class Planet:
-    AU = 149.6e6 * 1000
+    AU = 149.6e6 * 1000  # distance from Sun to Earth
     G = 6.67428e-11
     scale = 200 / AU
-    TIMESTEP = 3600 * 6  # half a day
+    TIMESTEP = 3600 * 6  # changes how fast the simulation runs: 6 = 6 hrs per timestep, 12 means 12 hrs in timestep, and 24 means 1 day per timestep
 
     def __init__(self, name, x, y, radius, color, mass):
         self.x = x
@@ -51,15 +51,15 @@ class Planet:
         if other.sun:
             self.distance_to_sun = distance
 
-        force = self.G * self.mass * other.mass / distance ** 2
-        theta = math.atan2(distance_y, distance_x)
-        force_x = math.cos(theta) * force
-        force_y = math.sin(theta) * force
+        force = self.G * self.mass * other.mass / distance ** 2  #
+        theta = math.atan2(distance_y, distance_x)  # Using the formular to generally make planets fall
+        force_x = math.cos(theta) * force  # into each other (in all direction) based on their
+        force_y = math.sin(theta) * force  # mass and distance
         return force_x, force_y
 
-    def update_position(self, planets):
-        total_fx = total_fy = 0
-        for planet in planets:
+    def update_position(self, planets):  # Move planets around by applying initial velocity
+        total_fx = total_fy = 0  # so that the planets do not just fall straight to
+        for planet in planets:  # each other
             if self == planet:
                 continue
 
@@ -74,9 +74,9 @@ class Planet:
         self.y += self.y_vel * self.TIMESTEP
         self.orbit.append((self.x, self.y))
 
-    def draw(self, wn):
-        x = self.x * self.scale + width / 2
-        y = self.y * self.scale + height / 2
+    def draw(self, wn):  # Simple drawing method that make up planet shape,
+        x = self.x * self.scale + width / 2  # size, and color, and also write identifier for
+        y = self.y * self.scale + height / 2  # each planet differently.
 
         if len(self.orbit) > 2:
             updated_points = []
@@ -105,7 +105,10 @@ def main():
     sun = Planet("Sun", 0, 0, 30, Sun, 1.98892 * 10 ** 30)
     sun.sun = True
 
-    earth = Planet("Earth", -1 * Planet.AU, 0, 16, Earth, 5.9742 * 10 ** 24)
+    # All planets except the sun have variables in order: name, distance from the Sun in AU unit, size (in simulation),
+    # color, and mass
+
+    earth = Planet("Earth", -1 * Planet.AU, 0, 16, Earth, 5.9722 * 10 ** 24)
     earth.y_vel = 29.783 * 1000
 
     mercury = Planet("Mercury", 0.387 * Planet.AU, 0, 8, Mercury, 3.30 * 10 ** 23)
@@ -119,7 +122,8 @@ def main():
 
     planets = [sun, earth, mars, mercury, venus]
 
-    mixer.music.play(loops=10000000)
+    mixer.music.play(loops=10000000)  # Plays music that loop 100000000 times, I do not know how to make it loop
+                                      # forever, so I made it loop a lot
     while run:
         clock.tick(60)
         wn.fill((0, 0, 0))
